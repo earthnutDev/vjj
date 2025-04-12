@@ -1,4 +1,4 @@
-import { isString } from 'a-type-of-js';
+import { isArray, isString, isUndefined } from 'a-type-of-js';
 import command from './command';
 import { dataStore } from './data-store';
 
@@ -8,25 +8,37 @@ import { dataStore } from './data-store';
  *
  */
 export function parseArg() {
+  const { commandParameters } = dataStore;
   /**  用户参数  */
   const args = command.args;
 
   /**  用户参数的 map 形式  */
   const argsMap = args.$map;
 
-  if (argsMap['preid'] && isString(argsMap['preid'].value[0])) {
-    dataStore.preid = argsMap['preid'].value[0];
+  const preid = argsMap['--preid'];
+
+  if (!isUndefined(preid) && isArray(preid.value) && isString(preid.value[0])) {
+    commandParameters.preid = preid.value[0];
   }
 
-  if (argsMap['updateDependence']) {
-    dataStore.updateDependence = true;
+  if (argsMap['--upDependence']) {
+    commandParameters.updateDependence = true;
   }
 
-  if (argsMap['buildCheck']) {
-    dataStore.buildCheck = true;
+  if (argsMap['--buildCheck']) {
+    commandParameters.buildCheck = true;
   }
 
-  if (argsMap['publish']) {
-    dataStore.pushNpm = true;
+  if (argsMap['--publish']) {
+    commandParameters.pushNpm = true;
+  }
+
+  const noDiff = argsMap['--no-diff'];
+  if (!isUndefined(noDiff)) {
+    if (noDiff.value && noDiff.value[0] === false) {
+      commandParameters.noDiff = false;
+    } else {
+      commandParameters.noDiff = true;
+    }
   }
 }

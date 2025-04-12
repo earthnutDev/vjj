@@ -16,8 +16,12 @@ jobs:
     # 或者手动触发
     name: 运行测试并将测试率提交到 Codecov 和 coveralls
     runs-on: ubuntu-latest
+    # contains(github.event.head_commit.message,'version') 检查提交信息是否包含 version
+    # startsWith(github.event.head_commit.message,'version') 检查提交信息是否以 version 开头
+    # endsWith(github.event.head_commit.message,'version') 检查提交信息是否以 version 结尾
+    # github.event_name == 'workflow_dispatch' 检查是否为手动触发
     if: |
-      (github.event_name == 'push' && contains(github.event.head_commit.message, 'version')) ||
+      (github.event_name == 'push' && (startsWith(github.event.head_commit.message, 'version') || contains(github.event.head_commit.message, 'coverage'))) ||
       github.event_name == 'workflow_dispatch'
     steps:
       - name: 代码检出

@@ -1,5 +1,5 @@
 import { _p, runOtherCode } from 'a-node-tools';
-import { greenPen } from './greenPen';
+import { greenPen } from './pen/greenPen';
 
 /**
  *

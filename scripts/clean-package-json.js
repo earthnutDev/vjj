@@ -1,14 +1,60 @@
-import { pathJoin, readFileToJsonSync } from 'a-node-tools';
+import {
+  pathJoin,
+  readFileToJsonSync,
+  getDirectoryBy,
+  writeJsonFile,
+  runOtherCode,
+} from 'a-node-tools';
 import { writeFileSync } from 'node:fs';
 
-const packageJson = readFileToJsonSync('./package.json');
+let packageJson = readFileToJsonSync('./package.json');
 
-delete packageJson.scripts;
-delete packageJson.devDependencies;
-delete packageJson['lint-staged'];
-delete packageJson.private;
+['scripts', 'devDependencies', 'lint-staged', 'private'].forEach(
+  key => delete packageJson[key],
+);
 
-// eslint-disable-next-line no-undef
-const distPath = pathJoin(process.cwd(), './dist/package.json');
+packageJson = {
+  ...packageJson,
+  author: {
+    name: 'earthnut',
+    email: 'earthnut.dev@outlook.com',
+    url: 'https://earthnut.dev',
+  },
+  files: ['mjs', 'bin'],
+  keywords: ['vjj'],
+  homepage: 'https://earthnut.dev/vjj',
+  bugs: {
+    url: 'https://github.com/earthnutDev/vjj/issues',
+    email: 'earthnut.dev@outlook.com',
+  },
+  repository: {
+    type: 'git',
+    url: 'git+https://github.com/earthnutDev/vjj.git',
+  },
+  publishConfig: {
+    access: 'public',
+    registry: 'https://registry.npmjs.org/',
+  },
+  bin: {
+    vjj: './bin.js',
+  },
+};
 
-writeFileSync(distPath, JSON.stringify(packageJson, null, 2));
+// 写入 dist/package.json
+{
+  const distPath = getDirectoryBy('dist', 'directory');
+  const distPackagePath = pathJoin(distPath, './dist/package.json');
+  writeJsonFile(distPackagePath, packageJson);
+}
+
+// 写入 dist/bin.js
+{
+  await runOtherCode({ code: 'mkdir -p ./dist' });
+  writeFileSync(
+    'dist/bin.js',
+    `#!/usr/bin/env node
+
+import './mjs/index.mjs';
+  `,
+  );
+}

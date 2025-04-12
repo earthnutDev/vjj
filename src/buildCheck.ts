@@ -1,6 +1,6 @@
 import { _p, runOtherCode } from 'a-node-tools';
 import command from './command';
-import { greenPen } from './greenPen';
+import { greenPen } from './pen/greenPen';
 
 /**
  *
@@ -11,7 +11,7 @@ export async function buildCheck() {
   const rebuild = await runOtherCode('npm run build');
 
   if (!rebuild.success) {
-    return command.error;
+    command.error();
   }
   _p(greenPen(`打包测试完成`));
 }

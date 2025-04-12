@@ -1,5 +1,5 @@
 import { _p, runOtherCode } from 'a-node-tools';
-import { greenPen } from './greenPen';
+import { greenPen } from './pen/greenPen';
 import pen from 'color-pen';
 
 /**
@@ -19,6 +19,6 @@ export async function updateDependence() {
       `请等待更新包（你的 package.json 的 scripts 最好有 build 命令）`,
     ),
   );
-  await runOtherCode({ code: 'npm update --save', printLog: false });
+  await runOtherCode({ code: 'npm update --save' });
   _p(greenPen(`依赖更新完毕`));
 }
