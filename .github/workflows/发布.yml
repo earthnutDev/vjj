@@ -1,7 +1,8 @@
 name: 发布到 npm
 on:
   push:
-    branches: '*'
+    branches:
+      - '*'
   workflow_dispatch: # 手动触发
     inputs:
       version:
