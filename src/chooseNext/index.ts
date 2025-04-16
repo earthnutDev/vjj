@@ -22,12 +22,10 @@ export async function chooseNext(): Promise<boolean | void> {
   const currentPreid = preid || '??';
 
   const data = [
-    `🥜 测试 (prerelease)  ☞☞ ${major}.${minor}.${
-      hasPrerelease ? patch : patch + 1
-    }-${preidOriginal}.${prereleaseNumber + 1}`,
-    `🐛 修复 (patch)  ☞☞ ${major}.${minor}.${hasPrerelease ? patch : patch + 1}`,
-    `✨ 新增 (minor)  ☞☞ ${major}.${hasPrerelease && patch === 0 ? minor : minor + 1}.0`,
-    `⚠️  迭代 (major)  ☞☞ ${hasPrerelease && patch === 0 && minor === 0 ? major : major + 1}.0.0`,
+    `🥜 测试 (prerelease)  ☞☞ ${major}.${minor}.${patch}-${preidOriginal}.${prereleaseNumber + 1}`,
+    `🐛 修复 (patch)  ☞☞ ${major}.${minor}.${patch + Number(!hasPrerelease)}`,
+    `✨ 新增 (minor)  ☞☞ ${major}.${minor + Number(!hasPrerelease || !!patch)}.0`,
+    `⚠️  迭代 (major)  ☞☞ ${major + Number(!hasPrerelease || !!(patch + minor))}.0.0`,
     `🐛 测试 (prepatch)  ☞☞ ${major}.${minor}.${patch + 1}-${currentPreid}.0`,
     `✨ 测试 (preminor)  ☞☞ ${major}.${minor + 1}.0-${currentPreid}.0`,
     `⚠️  迭代 (premajor)  ☞☞ ${major + 1}.0.0-${currentPreid}.0`,

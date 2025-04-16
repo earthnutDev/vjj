@@ -25,8 +25,6 @@ export async function appendNewVersion(filePath: string, newVersion: string) {
     }
   }
 
-  console.log(fileContent[oldVersionLine]);
-
   fileContent.splice(
     oldVersionLine > -1 ? oldVersionLine : 1,
     0,
