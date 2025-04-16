@@ -1,4 +1,4 @@
-import { getNpmPkgInfo } from 'a-node-tools';
+import { _p, getNpmPkgInfo } from 'a-node-tools';
 import { isNull } from 'a-type-of-js';
 import { dataStore } from '../data-store';
 import { parseVersion } from './parseVersion';
@@ -25,8 +25,9 @@ export async function diff() {
     if (
       process.env.VJJ_DEV === 'true' &&
       process.env.npm_lifecycle_event === 'dev'
-    )
-      console.log(error);
+    ) {
+      _p(error);
+    }
     // 忽略错误
     return;
   }

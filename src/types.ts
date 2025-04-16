@@ -39,8 +39,8 @@ export interface DataStore {
   commandParameters: {
     /**  不显示对比，缺省值为 false  */
     noDiff: boolean;
-    /**   依赖更新  */
-    updateDependence: boolean | undefined;
+    /**  不写入 CHANGELOG.md  */
+    noWriteChangelog: boolean;
     /**  打包 📦 检测  */
     buildCheck: boolean | undefined;
     /**
@@ -103,6 +103,14 @@ export interface DataStore {
   };
   /**  用户选择的发布模式  */
   _semver: Semver;
-  /**  用户选择的发布模式  */
+  /**
+   *
+   * ###  用户选择的发布模式
+   *
+   * 该值在 setter ，根据发布类型自动覆盖 preid
+   *
+   */
   semver: Semver;
+  /**  最终返回的真实版本  */
+  newVersion: string;
 }

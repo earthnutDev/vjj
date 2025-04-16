@@ -1,4 +1,6 @@
-import { main } from 'src';
+import { _p } from 'a-node-tools';
+import command from 'src/command';
+import { main } from 'src/main';
 
 (async () => {
   try {
@@ -9,9 +11,9 @@ import { main } from 'src';
         process.env.npm_lifecycle_event === 'dev') ||
       process.env.VJJ_LOG === 'error'
     ) {
-      console.log(error);
+      _p(error);
     }
 
-    process.exit(0);
+    command.end();
   }
 })();

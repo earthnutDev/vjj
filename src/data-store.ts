@@ -10,11 +10,11 @@ import { isNull } from 'a-type-of-js';
  */
 export const dataStore: DataStore = {
   commandParameters: {
-    updateDependence: undefined,
     buildCheck: undefined,
     preid: undefined,
     pushNpm: undefined,
     noDiff: false,
+    noWriteChangelog: false,
   },
   originalVersion: {
     _version: '',
@@ -101,4 +101,5 @@ export const dataStore: DataStore = {
       this.commandParameters.preid = this.originalVersion.preidOriginal;
     }
   },
+  newVersion: '',
 };

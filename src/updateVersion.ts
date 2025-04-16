@@ -20,7 +20,7 @@ export async function updateVersion() {
   const code = `npm version ${semver} --no-git-tag-version --allow-same-version ${semver.startsWith('pre') ? `--preid  ${preid}` : ''}`;
   /** 该版本更新并不会提交代码，代码提交放到下面来做版本的变更 */
   const result = await runOtherCode({ code, printLog: false });
-  if (result.error) {
+  if (result.success === false) {
     command.error();
   } else {
     _p(
@@ -28,5 +28,6 @@ export async function updateVersion() {
         `版本整理完毕, 版本号由 ${version} 更新为 ${result.data}`,
       ),
     );
+    dataStore.newVersion = result.data.replace(/\n/g, '');
   }
 }

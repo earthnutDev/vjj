@@ -21,10 +21,6 @@ export function parseArg() {
     commandParameters.preid = preid.value[0];
   }
 
-  if (argsMap['--upDependence']) {
-    commandParameters.updateDependence = true;
-  }
-
   if (argsMap['--buildCheck']) {
     commandParameters.buildCheck = true;
   }
@@ -39,6 +35,15 @@ export function parseArg() {
       commandParameters.noDiff = false;
     } else {
       commandParameters.noDiff = true;
+    }
+  }
+
+  const noWriteChangelog = argsMap['--no-changelog'];
+  if (!isUndefined(noWriteChangelog)) {
+    if (noWriteChangelog.value && noWriteChangelog.value[0] === false) {
+      commandParameters.noWriteChangelog = false;
+    } else {
+      commandParameters.noWriteChangelog = true;
     }
   }
 }
