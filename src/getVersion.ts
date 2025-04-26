@@ -1,4 +1,9 @@
-import { getDirectoryBy, pathJoin, readFileToJsonSync } from 'a-node-tools';
+import {
+  getDirectoryBy,
+  PackageJson,
+  pathJoin,
+  readFileToJsonSync,
+} from 'a-node-tools';
 import { isUndefined } from 'a-type-of-js';
 import { dataStore } from './data-store';
 
@@ -32,9 +37,10 @@ function getPkgInfoFromFile(cwd: string) {
   /**  本地 package.json 文件的路径  */
   const packageJsonPath = pathJoin(cwd, 'package.json');
   // 获取文件
-  const packageInfo = readFileToJsonSync(packageJsonPath) || {};
-  const name = packageInfo.name;
-  const version = packageInfo.version;
+  const packageInfo = readFileToJsonSync<PackageJson>(packageJsonPath);
+
+  const name = packageInfo?.name;
+  const version = packageInfo?.version;
 
   if (isUndefined(name) || isUndefined(version)) {
     throw new Error(

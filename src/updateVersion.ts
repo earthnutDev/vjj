@@ -14,7 +14,7 @@ export async function updateVersion() {
   const { version } = originalVersion;
 
   if (!semver) {
-    _p(pen.hex('#aa0')('没有选择发布模式版本号，跳过版本更新'));
+    _p(pen.hex('#aa0')`没有选择发布模式版本号，跳过版本更新`);
     return;
   }
   const code = `npm version ${semver} --no-git-tag-version --allow-same-version ${semver.startsWith('pre') ? `--preid  ${preid}` : ''}`;
@@ -24,9 +24,7 @@ export async function updateVersion() {
     command.error();
   } else {
     _p(
-      pen.hex('#3a6')(
-        `版本整理完毕, 版本号由 ${version} 更新为 ${result.data}`,
-      ),
+      pen.hex('#3a6')`版本整理完毕, 版本号由 ${version} 更新为 ${result.data}`,
     );
     dataStore.newVersion = result.data.replace(/\n/g, '');
   }

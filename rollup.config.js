@@ -10,14 +10,14 @@ import copy from 'rollup-plugin-copy';
 const excludedPkg = ['node:', 'a-', 'color-pen'];
 
 export default {
-  input: './index.ts',
+  input: './bin.ts',
   output: {
     format: 'es',
     entryFileNames: '[name].mjs',
     preserveModules: true,
     sourcemap: false,
     exports: 'named',
-    dir: 'dist/mjs',
+    dir: 'dist/',
   },
   // 配置需要排除的包
   external: id => new RegExp('^'.concat(excludedPkg.join('|^'))).test(id),
@@ -36,11 +36,8 @@ export default {
     cleanup(),
     copy({
       targets: [
-        { src: 'package.json', dest: 'dist' },
         { src: 'README.md', dest: 'dist' },
         { src: 'LICENSE', dest: 'dist' },
-        // 若是生成 bin 类型的包，可以将下面的代码打开
-        { src: 'bin', dest: 'dist' },
       ],
     }),
   ],
