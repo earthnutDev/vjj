@@ -18,7 +18,7 @@ packageJson = {
     email: 'earthnut.dev@outlook.com',
     url: 'https://earthnut.dev',
   },
-  files: ['src', 'index.mjs', 'bin.js'],
+  files: ['src', 'bin.mjs'],
   keywords: ['vjj'],
   homepage: 'https://earthnut.dev/vjj',
   bugs: {
