@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { dog } from './src/dog';
-import command from 'src/command';
-import { main } from 'src/main';
+import command from './src/command';
+import { main } from './src/main';
 
 (async () => {
   try {

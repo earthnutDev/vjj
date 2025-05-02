@@ -12,7 +12,9 @@ import { parseVersion } from './parseVersion';
 export async function diff() {
   try {
     const { name, version } = dataStore.originalVersion;
-    const npmInfo = await getNpmPkgInfo(name || 'vjj');
+    const result = await getNpmPkgInfo(name || 'vjj');
+
+    const npmInfo = result.data;
 
     dataStore.onlineData.info = npmInfo;
 

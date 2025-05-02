@@ -1,5 +1,5 @@
-import command from 'src/command';
-import { dataStore } from 'src/data-store';
+import command from '../command';
+import { dataStore } from '../data-store';
 import { manualEnter } from './manualEnter';
 
 /**

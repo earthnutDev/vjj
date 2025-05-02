@@ -67,7 +67,7 @@ npx vjj -nc=1
 npx vjj -nc 1
 npx vjj -nc='a'
 npx vjj -nc 'a'
-# 下面的值同不适用 `-nc` 选项
+# 下面的值同不使用 `-nc` 选项
 npx vjj -nc=false
 npx vjj -nc false
 ```
