@@ -45,6 +45,7 @@ jobs:
         with:
           node-version: 22.x
           registry-url: https://registry.npmjs.org
+
       - name: 发布到 npm
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
