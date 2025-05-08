@@ -4,13 +4,13 @@ import { _p } from 'a-node-tools';
 import { dataStore } from './data-store';
 
 import { chooseNext } from './chooseNext';
-import { greenPen } from './pen/greenPen';
 import { buildCheck } from './buildCheck';
 import { getVersion } from './getVersion';
 
 import { diff } from './diff';
 import { updateVersion } from './updateVersion';
 import { writeToCHANGELOG } from './writeToCHANGELOG';
+import { greenPen } from 'color-pen';
 
 /**
  * 主函数
