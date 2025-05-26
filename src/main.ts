@@ -1,6 +1,5 @@
 import { publish } from './publish';
 import { parseArg } from './parseArg';
-import { _p } from 'a-node-tools';
 import { dataStore } from './data-store';
 
 import { chooseNext } from './chooseNext';
@@ -10,7 +9,7 @@ import { getVersion } from './getVersion';
 import { diff } from './diff';
 import { updateVersion } from './updateVersion';
 import { writeToCHANGELOG } from './writeToCHANGELOG';
-import { greenPen } from 'color-pen';
+import { dun } from './dog';
 
 /**
  * 主函数
@@ -36,13 +35,12 @@ export async function main() {
   }
 
   // ✍️ 写入 CHANGELOG.md
-  if (commandParameters.noWriteChangelog === false) {
+  if (commandParameters.noWriteChangelog === false && dun) {
     await writeToCHANGELOG();
   }
+
   // 发布到 npm
   if (commandParameters.pushNpm) {
     await publish();
   }
-
-  _p(greenPen(` 🚀 执行 🚀   ✅`));
 }

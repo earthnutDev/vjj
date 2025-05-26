@@ -21,14 +21,17 @@ export function parseArg() {
     commandParameters.preid = preid.value[0];
   }
 
+  // 配置是否打包检测
   if (argsMap['--buildCheck']) {
     commandParameters.buildCheck = true;
   }
 
+  // 配置是否直接 npm publish
   if (argsMap['--publish']) {
     commandParameters.pushNpm = true;
   }
 
+  // 配置是否跳过版本检测
   const noDiff = argsMap['--no-diff'];
   if (!isUndefined(noDiff)) {
     if (noDiff.value && noDiff.value[0] === false) {
@@ -38,6 +41,7 @@ export function parseArg() {
     }
   }
 
+  // 配置是否不写入 CHANGELOG.md
   const noWriteChangelog = argsMap['--no-changelog'];
   if (!isUndefined(noWriteChangelog)) {
     if (noWriteChangelog.value && noWriteChangelog.value[0] === false) {

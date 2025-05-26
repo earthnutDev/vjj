@@ -98,7 +98,7 @@ export interface DataStore {
     _info: npmPkgInfoType | null;
     /**  从接口获取的全数据  */
     info: npmPkgInfoType | null;
-    /**  线上已有的预发布 preid 标识   */
+    /**  线上已有的预发布 preid 标识 （给 info 赋值的时候自定更新该值）  */
     preid: string[];
   };
   /**  用户选择的发布模式  */

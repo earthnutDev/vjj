@@ -10,10 +10,5 @@ export function fileNotExist(filePath: string, newVersion: string) {
 
   const time = getTime();
 
-  writeFileSync(
-    filePath,
-    `# ${name}
-  
-## ${newVersion} （${time}）\n\n`,
-  );
+  writeFileSync(filePath, `# ${name}\n\r\n## ${newVersion} (${time})\n\n`);
 }

@@ -1,6 +1,8 @@
+import { dog } from './../dog';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dataStore } from '../data-store';
 import { getTime } from './utils';
+import { typewrite } from 'a-node-tools';
 
 /**
  *
@@ -8,7 +10,9 @@ import { getTime } from './utils';
  *
  */
 export async function appendNewVersion(filePath: string, newVersion: string) {
-  const { version } = dataStore.originalVersion;
+  const { originalVersion } = dataStore;
+
+  const { version } = originalVersion;
 
   // 在上一个步骤已经判断了该文件存在
   const fileContent = readFileSync(filePath, 'utf-8')
@@ -28,8 +32,13 @@ export async function appendNewVersion(filePath: string, newVersion: string) {
   fileContent.splice(
     oldVersionLine > -1 ? oldVersionLine : 1,
     0,
-    `\n## ${newVersion} （${getTime()}）\n`,
+    `\n## ${newVersion} (${getTime()}) \n`,
   );
 
-  writeFileSync(filePath, fileContent.join('\n').replace(/\n{2,}/g, '\n\n'));
+  try {
+    writeFileSync(filePath, fileContent.join('\n').replace(/\n{2,}/g, '\n\n'));
+  } catch (error) {
+    dog.error('写入 CHANGELOG.md 文件出错', error);
+    await typewrite('向 CHANGELOG.md 写入新版本记录出错');
+  }
 }

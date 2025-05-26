@@ -1,5 +1,7 @@
+import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { dataStore } from '../data-store';
+import { exitPogrom } from '../utils';
 
 /**
  *
@@ -8,9 +10,13 @@ import { dataStore } from '../data-store';
  */
 export async function manualEnter() {
   const preidOriginal = await command.question({
-    text: '请输入预发布版本号',
-    resultText: '您输入的预发布版本号为',
+    text: '请为预发布版本号配置标签',
+    private: true,
   });
 
-  dataStore.commandParameters.preid = preidOriginal as string;
+  // 用户在输入与发布的
+  if (isUndefined(preidOriginal)) {
+    return exitPogrom('您在输入预发布版本的标签时选择了退出，即将为您退出');
+  }
+  dataStore.commandParameters.preid = preidOriginal;
 }

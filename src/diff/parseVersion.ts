@@ -9,6 +9,9 @@ import { bgBlackPen, strInOneLineOnTerminal } from 'color-pen';
  *
  * 检查版本号
  *
+ * 解析线上的版本，如果线上版本包含本版本，则跳过提示打印
+ *
+ *
  */
 export function parseVersion(version: string, tempInfo: npmPkgInfoType) {
   const versions = Object.keys(tempInfo.time);

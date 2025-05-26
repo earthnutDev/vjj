@@ -1,7 +1,11 @@
-import { selection } from 'a-command';
+import { dog } from './../dog';
+import { selection, SelectionParamDataType } from 'a-command';
 import { dataStore } from '../data-store';
 import { getPreid } from './preid';
-import { Semver } from 'src/types';
+import { Semver } from '../types';
+import { isUndefined } from 'a-type-of-js';
+import { exitPogrom } from '../utils';
+import { cyanPen, magentaPen } from 'color-pen';
 
 /** 未来版本预估 */
 export async function chooseNext(): Promise<boolean | void> {
@@ -20,15 +24,39 @@ export async function chooseNext(): Promise<boolean | void> {
 
   // 预测版本号
   const currentPreid = preid || '??';
+  const arrowhead = cyanPen`>>`;
 
-  const data = [
-    `🥜 测试 (prerelease)  ☞☞ ${major}.${minor}.${patch}-${preidOriginal}.${prereleaseNumber + 1}`,
-    `🐛 修复 (patch)  ☞☞ ${major}.${minor}.${patch + Number(!hasPrerelease)}`,
-    `✨ 新增 (minor)  ☞☞ ${major}.${minor + Number(!hasPrerelease || !!patch)}.0`,
-    `⚠️  迭代 (major)  ☞☞ ${major + Number(!hasPrerelease || !!(patch + minor))}.0.0`,
-    `🐛 测试 (prepatch)  ☞☞ ${major}.${minor}.${patch + 1}-${currentPreid}.0`,
-    `✨ 测试 (preminor)  ☞☞ ${major}.${minor + 1}.0-${currentPreid}.0`,
-    `⚠️  迭代 (premajor)  ☞☞ ${major + 1}.0.0-${currentPreid}.0`,
+  /**  数据  */
+  const data: SelectionParamDataType = [
+    {
+      label: `🥜 测试迭代 ${arrowhead}  ${major}.${minor}.${patch}-${preidOriginal}.${prereleaseNumber + 1}`,
+      value: 'prerelease',
+    },
+    {
+      label: `🐛 ${hasPrerelease ? '测试转正' : '修复 bug'} ${arrowhead} ${major}.${minor}.${patch + Number(!hasPrerelease)}`,
+      value: 'patch',
+    },
+
+    {
+      label: `✨ ${hasPrerelease ? '测试转正' : '功能添加'}  ${arrowhead} ${major}.${minor + Number(!hasPrerelease || !!patch)}.0`,
+      value: 'minor',
+    },
+    {
+      label: `⚠️  ${hasPrerelease ? '测试转正' : '迭代更新'}  ${arrowhead} ${major + Number(!hasPrerelease || !!(patch + minor))}.0.0`,
+      value: 'major',
+    },
+    {
+      label: `🐛 测试预发布  ${arrowhead} ${major}.${minor}.${patch + 1}-${currentPreid}.0`,
+      value: 'prepatch',
+    },
+    {
+      label: `✨ 新功能测试  ${arrowhead} ${major}.${minor + 1}.0-${currentPreid}.0`,
+      value: 'preminor',
+    },
+    {
+      label: `⚠️  迭代测试  ${arrowhead} ${major + 1}.0.0-${currentPreid}.0`,
+      value: 'premajor',
+    },
   ];
 
   // 当前是预发布版本的，将根据版本号的
@@ -47,19 +75,26 @@ export async function chooseNext(): Promise<boolean | void> {
     data[0] = '';
   }
 
-  const selectVersionType = (await selection({
+  const selectVersionType = await selection<Semver>({
     data: data.filter(item => item !== ''),
     info: `当前版本为（${version}），请选择下一个版本号`,
-    resultText: '您选择了',
-  })) as string;
+    private: true,
+  });
 
-  dataStore.semver = selectVersionType.replace(
-    /^.*\((.*)\).*$/g,
-    '$1',
-  ) as Semver;
+  // 用户选择了退出
+  if (isUndefined(selectVersionType)) {
+    return await exitPogrom();
+  }
+
+  dog('当前用户选择了 ', magentaPen`>`, selectVersionType);
+
+  dataStore.semver = selectVersionType;
 
   // 如果选择自定义版本号的预发布版本
-  if (selectVersionType.includes('??')) {
+  if (
+    selectVersionType.startsWith('pre') &&
+    selectVersionType !== 'prerelease'
+  ) {
     await getPreid();
   }
 

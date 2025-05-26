@@ -8,10 +8,13 @@ import { parseVersion } from './parseVersion';
  *
  * 对比版本号
  *
+ *
+ * 获取线上的 npm 版本号，检出最后的 latest 版本
  */
 export async function diff() {
   try {
     const { name, version } = dataStore.originalVersion;
+
     const result = await getNpmPkgInfo(name || 'vjj');
 
     const npmInfo = result.data;

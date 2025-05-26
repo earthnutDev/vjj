@@ -1,6 +1,8 @@
+import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { dataStore } from '../data-store';
 import { manualEnter } from './manualEnter';
+import { exitPogrom } from '../utils';
 
 /**
  * 获取预发布版本号
@@ -26,7 +28,7 @@ export async function getPreid() {
 
   /**  云端的已有的  */
   const onlinePreidList = preidOnline.map(
-    item => `${item}: 上一次在版本 ${info?.['dist-tags'][item]} 🀄️ 使用`,
+    item => `${item}: 上一次在版本 ${info?.['dist-tags'][item]} 中使用`,
   );
 
   onlinePreidList.push(
@@ -36,10 +38,16 @@ export async function getPreid() {
     '手动输入',
   );
 
-  const choosePreid = (await command.selection({
+  const choosePreid = await command.selection({
     data: onlinePreidList,
-    resultText: '您输入的预发布版本号为',
-  })) as string;
+    info: '请为本次预发布配置标签',
+    private: true,
+  });
+
+  // 用户使了退出
+  if (isUndefined(choosePreid)) {
+    return await exitPogrom();
+  }
 
   if (choosePreid === '手动输入') {
     return await manualEnter();
