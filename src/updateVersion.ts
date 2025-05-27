@@ -4,6 +4,8 @@ import { hexPen, magentaPen } from 'color-pen';
 import { isFalse } from 'a-type-of-js';
 import { dun } from './dog';
 import { exitPogrom } from './utils';
+import { commandParameters } from './commandParameters';
+import { originalVersion } from './originalVersion';
 
 /**
  *
@@ -11,7 +13,7 @@ import { exitPogrom } from './utils';
  *
  */
 export async function updateVersion() {
-  const { semver, originalVersion, commandParameters } = dataStore;
+  const { semver } = dataStore;
   const { preid } = commandParameters;
   const { version } = originalVersion;
 

@@ -1,7 +1,7 @@
 import { isUndefined } from 'a-type-of-js';
 import command from '../command';
-import { dataStore } from '../data-store';
 import { exitPogrom } from '../utils';
+import { commandParameters } from '../commandParameters';
 
 /**
  *
@@ -18,5 +18,5 @@ export async function manualEnter() {
   if (isUndefined(preidOriginal)) {
     return exitPogrom('您在输入预发布版本的标签时选择了退出，即将为您退出');
   }
-  dataStore.commandParameters.preid = preidOriginal;
+  commandParameters.preid = preidOriginal;
 }

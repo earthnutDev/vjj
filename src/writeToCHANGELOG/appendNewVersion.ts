@@ -1,8 +1,8 @@
 import { dog } from './../dog';
 import { readFileSync, writeFileSync } from 'node:fs';
-import { dataStore } from '../data-store';
 import { getTime } from './utils';
 import { typewrite } from 'a-node-tools';
+import { originalVersion } from '../originalVersion';
 
 /**
  *
@@ -10,8 +10,6 @@ import { typewrite } from 'a-node-tools';
  *
  */
 export async function appendNewVersion(filePath: string, newVersion: string) {
-  const { originalVersion } = dataStore;
-
   const { version } = originalVersion;
 
   // 在上一个步骤已经判断了该文件存在

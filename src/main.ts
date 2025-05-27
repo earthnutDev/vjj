@@ -1,21 +1,19 @@
 import { publish } from './publish';
 import { parseArg } from './parseArg';
-import { dataStore } from './data-store';
-
 import { chooseNext } from './chooseNext';
 import { buildCheck } from './buildCheck';
 import { getVersion } from './getVersion';
-
 import { diff } from './diff';
 import { updateVersion } from './updateVersion';
 import { writeToCHANGELOG } from './writeToCHANGELOG';
-import { dun } from './dog';
+import { dog, dun } from './dog';
+import { commandParameters } from './commandParameters';
+import { isFalse } from 'a-type-of-js';
 
 /**
  * 主函数
  */
 export async function main() {
-  const { commandParameters } = dataStore;
   parseArg(); // 解析参数
 
   // 检查构建
@@ -37,6 +35,8 @@ export async function main() {
   // ✍️ 写入 CHANGELOG.md
   if (commandParameters.noWriteChangelog === false && dun) {
     await writeToCHANGELOG();
+  } else if (isFalse(dun)) {
+    dog('跳过执行写入 CHANGELOG.md 文件');
   }
 
   // 发布到 npm

@@ -4,8 +4,9 @@ import {
   pathJoin,
   readFileToJsonSync,
 } from 'a-node-tools';
-import { isUndefined } from 'a-type-of-js';
+import { isNull, isUndefined } from 'a-type-of-js';
 import { dataStore } from './data-store';
+import { originalVersion } from './originalVersion';
 
 /**
  *
@@ -13,8 +14,6 @@ import { dataStore } from './data-store';
  *
  */
 export async function getVersion(): Promise<void> {
-  const { originalVersion } = dataStore;
-
   /**  本地 package.json 文件的上级目录  */
   const currentWordDirectory = getDirectoryBy('package.json', 'file');
 
@@ -39,6 +38,12 @@ function getPkgInfoFromFile(cwd: string) {
   // 获取文件
   const packageInfo = readFileToJsonSync<PackageJson>(packageJsonPath);
 
+  if (isNull(packageInfo)) {
+    throw new Error(
+      '未获取到 package.json 数据 \n 或package.json 文件格式错误',
+    );
+  }
+
   const name = packageInfo?.name;
   const version = packageInfo?.version;
 
@@ -49,6 +54,7 @@ function getPkgInfoFromFile(cwd: string) {
   }
 
   dataStore.packageJson.path = packageJsonPath;
+  dataStore.packageJson.info = packageInfo;
 
   return { name, version };
 }

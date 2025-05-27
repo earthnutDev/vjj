@@ -1,4 +1,4 @@
-import { npmPkgInfoType } from 'a-node-tools';
+import { npmPkgInfoType, PackageJson } from 'a-node-tools';
 
 /**
  *
@@ -14,6 +14,77 @@ export type Semver =
   | 'premajor'
   | 'prerelease'
   | undefined;
+
+/** 版本号数据  */
+export type VersionDetail = {
+  /**  主版本号  */
+  major: number;
+  /**  次版本号  */
+  minor: number;
+  /**  修订号  */
+  patch: number;
+  /**  包含预发布版本号  */
+  hasPrerelease: boolean;
+  /**  预发布版本号的原有标识   */
+  preidOriginal: string;
+  /**  预发布版本号   */
+  prereleaseNumber: number;
+};
+
+/**  原始数据  */
+export type OriginalVersion = {
+  /**  包名  */
+  name: string;
+  /**  版本号  */
+  _version: string;
+  /**
+   * ## 版本号
+   *
+   * 该值会在 setter 时被更新，当 setter 时，会更新 _version 的值，
+   *
+   * 并设置 major、minor、patch、hasPrerelease、preidOriginal、prereleaseNumber 的值
+   */
+  version: string;
+  /**  解析版本号  */
+  parseVersion(version: string): VersionDetail;
+} & VersionDetail;
+
+/**  线上的数据  */
+export type OnlineData = {
+  _info: npmPkgInfoType | null;
+  /**  从接口获取的全数据  */
+  info: npmPkgInfoType | null;
+  /**  线上已有的预发布 preid 标识 （给 info 赋值的时候自定更新该值）  */
+  preid: string[];
+  /**  最大的版本号  */
+  maxVersion: string;
+  /**  当前版本是否小于线上的版本  */
+  lessThen: boolean;
+};
+
+/**  输入参数  */
+export type CommandParameters = {
+  /**  不显示对比，缺省值为 false  */
+  noDiff: boolean;
+  /**  不写入 CHANGELOG.md  */
+  noWriteChangelog: boolean;
+  /**  打包 📦 检测  */
+  buildCheck: boolean | undefined;
+  /**
+   *
+   *  预发布包的
+   *
+   * 该值有两个赋值的途径：
+   *
+   * - 手动命令式添加值 `--id xx`
+   * - 选择带预发布版本时添加该值
+   *
+   * 该值将作为最后的 preid 值
+   */
+  preid: string | undefined;
+  /**  上推 npm  */
+  pushNpm: boolean | undefined;
+};
 /**
  *
  * 数 据
@@ -31,76 +102,22 @@ export interface DataStore {
   name: string;
   /**  本地 package.json */
   packageJson: {
+    info: PackageJson | null;
     /**  本地 package.json 文件的路径  */
     path: string;
     /**    */
   };
   /**  用户参数  */
-  commandParameters: {
-    /**  不显示对比，缺省值为 false  */
-    noDiff: boolean;
-    /**  不写入 CHANGELOG.md  */
-    noWriteChangelog: boolean;
-    /**  打包 📦 检测  */
-    buildCheck: boolean | undefined;
-    /**
-     *
-     *  预发布包的
-     *
-     * 该值有两个赋值的途径：
-     *
-     * - 手动命令式添加值 `--id xx`
-     * - 选择带预发布版本时添加该值
-     *
-     * 该值将作为最后的 preid 值
-     */
-    preid: string | undefined;
-    /**  上推 npm  */
-    pushNpm: boolean | undefined;
-  };
+  commandParameters: CommandParameters;
   /**  原版本号的信息  */
-  originalVersion: {
-    /**  包名  */
-    name: string;
-    /**  版本号  */
-    _version: string;
-    /**
-     *
-     *   版本号
-     *
-     *
-     * 该值会在 setter 时被更新，当 setter 时，会更新 _version 的值，
-     *
-     * 并设置 major、minor、patch、hasPrerelease、preidOriginal、prereleaseNumber 的值
-     *
-     */
-    version: string;
-    /**  主版本号  */
-    major: number;
-    /**  次版本号  */
-    minor: number;
-    /**  修订号  */
-    patch: number;
-    /**  包含预发布版本号  */
-    hasPrerelease: boolean;
-    /**  预发布版本号的原有标识   */
-    preidOriginal: string;
-    /**  预发布版本号   */
-    prereleaseNumber: number;
-  };
+  originalVersion: OriginalVersion;
   /**
    *
    * 线上版本信息
    *
    *  该值受 `no-diff` 值的影响
    */
-  onlineData: {
-    _info: npmPkgInfoType | null;
-    /**  从接口获取的全数据  */
-    info: npmPkgInfoType | null;
-    /**  线上已有的预发布 preid 标识 （给 info 赋值的时候自定更新该值）  */
-    preid: string[];
-  };
+  onlineData: OnlineData;
   /**  用户选择的发布模式  */
   _semver: Semver;
   /**

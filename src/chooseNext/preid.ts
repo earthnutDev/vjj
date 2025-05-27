@@ -1,15 +1,14 @@
 import { isUndefined } from 'a-type-of-js';
 import command from '../command';
-import { dataStore } from '../data-store';
 import { manualEnter } from './manualEnter';
 import { exitPogrom } from '../utils';
+import { commandParameters } from '../commandParameters';
+import { onlineData } from '../onlineData';
 
 /**
  * 获取预发布版本号
  */
 export async function getPreid() {
-  const { commandParameters, onlineData } = dataStore;
-
   // 如果说手动设置了 preid ，一般不会调用该方法，但是为了防止意外
   // 如果手动设置了 preid ，将以该值为准
   if (commandParameters.preid) {

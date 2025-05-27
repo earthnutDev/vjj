@@ -1,4 +1,4 @@
-import { cursorAfterClear, cursorMoveUp } from 'a-node-tools';
+import { cursorAfterClear } from 'a-node-tools';
 import command from './command';
 import { waiting } from './waiting';
 import { getRandomInt } from 'a-js-tools';
@@ -11,7 +11,6 @@ export async function exitPogrom(info: string = '您选择了退出，正在为�
   });
   await new Promise(resolve => setTimeout(resolve, 880));
   waiting.destroyed();
-  cursorMoveUp(1, true);
   cursorAfterClear();
   return command.end();
 }

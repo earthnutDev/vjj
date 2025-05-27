@@ -1,8 +1,9 @@
 import { dog } from './../dog';
 import { getNpmPkgInfo } from 'a-node-tools';
 import { isNull } from 'a-type-of-js';
-import { dataStore } from '../data-store';
-import { parseVersion } from './parseVersion';
+import { checkVersion } from './checkVersion';
+import { originalVersion } from '../originalVersion';
+import { onlineData } from '../onlineData';
 
 /**
  *
@@ -13,20 +14,20 @@ import { parseVersion } from './parseVersion';
  */
 export async function diff() {
   try {
-    const { name, version } = dataStore.originalVersion;
+    const { name, version } = originalVersion;
 
     const result = await getNpmPkgInfo(name || 'vjj');
 
     const npmInfo = result.data;
 
-    dataStore.onlineData.info = npmInfo;
+    onlineData.info = npmInfo;
 
     // 未获其线上数据或数据不对
     if (isNull(npmInfo) || npmInfo.name !== name) {
       return;
     }
 
-    parseVersion(version, npmInfo);
+    await checkVersion(version, npmInfo); // 比较版本
   } catch (error) {
     dog.error(error);
     // 忽略错误

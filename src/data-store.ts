@@ -1,7 +1,8 @@
 import { Semver } from 'src/types';
-import { npmPkgInfoType } from 'a-node-tools';
 import { DataStore } from './types';
-import { isNull } from 'a-type-of-js';
+import { originalVersion } from './originalVersion';
+import { onlineData } from './onlineData';
+import { commandParameters } from './commandParameters';
 
 /**
  *
@@ -9,62 +10,8 @@ import { isNull } from 'a-type-of-js';
  *
  */
 export const dataStore: DataStore = {
-  commandParameters: {
-    buildCheck: undefined,
-    preid: undefined,
-    pushNpm: undefined,
-    noDiff: false,
-    noWriteChangelog: false,
-  },
-  originalVersion: {
-    _version: '',
-    set version(version: string) {
-      this._version = version; // 保存原始版本号
-
-      /**    预发布版本号  */
-      let prerelease: string = '';
-
-      if (!/^(\d+\.?){3}(-([\w|\d]+\.)?\d+)?$/.test(version)) {
-        throw new Error('版本号格式错误');
-      }
-      // 包含预发布版本号信息
-      if (version.includes('-')) {
-        this.hasPrerelease = true;
-        [version, prerelease] = version.split('-');
-        if (prerelease.includes('.')) {
-          const prereleaseArray = prerelease.split('.');
-          this.preidOriginal = prereleaseArray[0];
-          this.prereleaseNumber = Number(prereleaseArray[1]);
-        } else {
-          // 如果包含字母
-          if (/^[a-zA-Z]+$/.test(prerelease)) {
-            this.preidOriginal = prerelease;
-            this.prereleaseNumber = 0;
-          }
-
-          // 如果仅包含数字
-          else if (/^[0-9]+$/.test(prerelease)) {
-            this.preidOriginal = '';
-            this.prereleaseNumber = Number(prerelease);
-          }
-        }
-      }
-
-      [this.major, this.minor, this.patch] = version
-        .split('.')
-        .map(v => Number(v));
-    },
-    get version() {
-      return this._version;
-    },
-    major: 0,
-    minor: 0,
-    patch: 0,
-    hasPrerelease: false,
-    preidOriginal: '',
-    prereleaseNumber: 0,
-    name: '',
-  },
+  commandParameters,
+  originalVersion,
 
   set name(name: string) {
     this.originalVersion.name = name;
@@ -72,23 +19,10 @@ export const dataStore: DataStore = {
   get name() {
     return this.originalVersion.name;
   },
-  onlineData: {
-    _info: null,
-    set info(info: npmPkgInfoType | null) {
-      this._info = info;
-      if (isNull(info)) return;
-      // 获取线上已有的预发布 preid 标识，除了 `latest` 标识
-      this.preid = Object.keys(info['dist-tags']).filter(
-        tag => tag !== 'latest',
-      );
-    },
-    get info(): npmPkgInfoType | null {
-      return this._info;
-    },
-    preid: [],
-  },
+  onlineData,
   packageJson: {
     path: '',
+    info: null,
   },
   _semver: undefined,
   get semver() {
@@ -96,7 +30,7 @@ export const dataStore: DataStore = {
   },
   set semver(value: Semver) {
     this._semver = value;
-    // 当值
+    // 当值为 prerelease 时，标签为原标签
     if (value === 'prerelease') {
       this.commandParameters.preid = this.originalVersion.preidOriginal;
     }

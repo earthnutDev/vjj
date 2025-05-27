@@ -6,10 +6,11 @@ import { Semver } from '../types';
 import { isUndefined } from 'a-type-of-js';
 import { exitPogrom } from '../utils';
 import { cyanPen, magentaPen } from 'color-pen';
+import { originalVersion } from '../originalVersion';
+import { commandParameters } from '../commandParameters';
 
 /** 未来版本预估 */
 export async function chooseNext(): Promise<boolean | void> {
-  const { originalVersion, commandParameters } = dataStore;
   const {
     major,
     minor,

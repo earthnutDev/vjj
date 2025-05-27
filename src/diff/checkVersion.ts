@@ -1,9 +1,10 @@
 import { _p, cursorMoveUp, npmPkgInfoType } from 'a-node-tools';
-
 import { getBlank } from './getBlank';
 import { blackBg } from './blackBg';
 import { colorLine } from './colorLine';
 import { bgBlackPen, strInOneLineOnTerminal } from 'color-pen';
+import { onlineData } from '../onlineData';
+import { chooseVersion } from './chooseVersion';
 
 /**
  *
@@ -13,8 +14,14 @@ import { bgBlackPen, strInOneLineOnTerminal } from 'color-pen';
  *
  *
  */
-export function parseVersion(version: string, tempInfo: npmPkgInfoType) {
+export async function checkVersion(version: string, tempInfo: npmPkgInfoType) {
   const versions = Object.keys(tempInfo.time);
+
+  // 当前线上版本高
+  if (onlineData.lessThen) {
+    return await chooseVersion();
+  }
+
   if (versions.includes(version)) {
     return;
   }
