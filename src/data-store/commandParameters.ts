@@ -1,4 +1,4 @@
-import { CommandParameters } from './types';
+import { CommandParameters } from '../types';
 
 /**  解析命令  */
 export const commandParameters: CommandParameters = {

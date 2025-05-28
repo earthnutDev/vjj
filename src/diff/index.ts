@@ -2,8 +2,8 @@ import { dog } from './../dog';
 import { getNpmPkgInfo } from 'a-node-tools';
 import { isNull } from 'a-type-of-js';
 import { checkVersion } from './checkVersion';
-import { originalVersion } from '../originalVersion';
-import { onlineData } from '../onlineData';
+import { originalVersion } from '../data-store/originalVersion';
+import { onlineData } from '../data-store/onlineData';
 
 /**
  *

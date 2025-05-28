@@ -1,10 +1,12 @@
+import { originalVersion } from './../data-store/originalVersion';
 import { _p, cursorMoveUp, npmPkgInfoType } from 'a-node-tools';
 import { getBlank } from './getBlank';
 import { blackBg } from './blackBg';
 import { colorLine } from './colorLine';
 import { bgBlackPen, strInOneLineOnTerminal } from 'color-pen';
-import { onlineData } from '../onlineData';
+import { onlineData } from '../data-store/onlineData';
 import { chooseVersion } from './chooseVersion';
+import { rewriteVersion } from './rewriteVersion';
 
 /**
  *
@@ -16,6 +18,21 @@ import { chooseVersion } from './chooseVersion';
  */
 export async function checkVersion(version: string, tempInfo: npmPkgInfoType) {
   const versions = Object.keys(tempInfo.time);
+
+  const {
+    major,
+    minor,
+    patch,
+    hasPrerelease,
+    preidOriginal,
+    prereleaseNumber,
+  } = originalVersion;
+  /**  由解析来的数据拼接成版本  */
+  const splicingVersion = `${major}.${minor}.${patch}${hasPrerelease ? `-${preidOriginal}.${prereleaseNumber}` : ''}`;
+  /**  拼接版本理应与原版本相同  */
+  if (originalVersion.version !== splicingVersion) {
+    return await rewriteVersion(splicingVersion);
+  }
 
   // 当前线上版本高
   if (onlineData.lessThen) {

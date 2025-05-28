@@ -45,8 +45,6 @@ export type OriginalVersion = {
    * 并设置 major、minor、patch、hasPrerelease、preidOriginal、prereleaseNumber 的值
    */
   version: string;
-  /**  解析版本号  */
-  parseVersion(version: string): VersionDetail;
 } & VersionDetail;
 
 /**  线上的数据  */

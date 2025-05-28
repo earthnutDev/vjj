@@ -1,5 +1,5 @@
 import { Semver } from 'src/types';
-import { DataStore } from './types';
+import { DataStore } from '../types';
 import { originalVersion } from './originalVersion';
 import { onlineData } from './onlineData';
 import { commandParameters } from './commandParameters';
@@ -14,10 +14,10 @@ export const dataStore: DataStore = {
   originalVersion,
 
   set name(name: string) {
-    this.originalVersion.name = name;
+    this.originalVersion.name = name.trim();
   },
   get name() {
-    return this.originalVersion.name;
+    return this.originalVersion.name.trim();
   },
   onlineData,
   packageJson: {

@@ -4,8 +4,8 @@ import { hexPen, magentaPen } from 'color-pen';
 import { isFalse } from 'a-type-of-js';
 import { dun } from './dog';
 import { exitPogrom } from './utils';
-import { commandParameters } from './commandParameters';
-import { originalVersion } from './originalVersion';
+import { commandParameters } from './data-store/commandParameters';
+import { originalVersion } from './data-store/originalVersion';
 
 /**
  *
@@ -30,7 +30,7 @@ export async function updateVersion() {
     return _p(code);
   }
   /** 该版本更新并不会提交代码，代码提交放到下面来做版本的变更 */
-  const result = await runOtherCode({ code, printLog: false, waiting: true });
+  const result = await runOtherCode({ code, waiting: true });
   if (isFalse(result.success)) {
     return exitPogrom(magentaPen`执行 npx version 出现故障`);
   } else {

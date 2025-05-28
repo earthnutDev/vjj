@@ -2,7 +2,7 @@ import { dog } from './../dog';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { getTime } from './utils';
 import { typewrite } from 'a-node-tools';
-import { originalVersion } from '../originalVersion';
+import { originalVersion } from '../data-store/originalVersion';
 
 /**
  *

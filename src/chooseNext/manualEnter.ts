@@ -1,7 +1,7 @@
 import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { exitPogrom } from '../utils';
-import { commandParameters } from '../commandParameters';
+import { commandParameters } from '../data-store/commandParameters';
 
 /**
  *

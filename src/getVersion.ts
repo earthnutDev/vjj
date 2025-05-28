@@ -6,7 +6,8 @@ import {
 } from 'a-node-tools';
 import { isNull, isUndefined } from 'a-type-of-js';
 import { dataStore } from './data-store';
-import { originalVersion } from './originalVersion';
+import { originalVersion } from './data-store/originalVersion';
+import { exitPogrom } from './utils';
 
 /**
  *
@@ -18,11 +19,12 @@ export async function getVersion(): Promise<void> {
   const currentWordDirectory = getDirectoryBy('package.json', 'file');
 
   if (isUndefined(currentWordDirectory)) {
+    await exitPogrom('未获取到 package.json 数据');
     throw new Error('未找到package.json文件');
   }
 
-  const { name, version } = getPkgInfoFromFile(currentWordDirectory);
-
+  const { name, version } = await getPkgInfoFromFile(currentWordDirectory);
+  // 这里将触发给值的操作
   originalVersion.version = version;
   dataStore.name = name;
 }
@@ -32,25 +34,27 @@ export async function getVersion(): Promise<void> {
  * 获取本地的包信息
  *
  */
-function getPkgInfoFromFile(cwd: string) {
+async function getPkgInfoFromFile(cwd: string) {
   /**  本地 package.json 文件的路径  */
   const packageJsonPath = pathJoin(cwd, 'package.json');
   // 获取文件
   const packageInfo = readFileToJsonSync<PackageJson>(packageJsonPath);
 
   if (isNull(packageInfo)) {
-    throw new Error(
+    await exitPogrom(
       '未获取到 package.json 数据 \n 或package.json 文件格式错误',
     );
+    throw new Error();
   }
 
   const name = packageInfo?.name;
   const version = packageInfo?.version;
 
   if (isUndefined(name) || isUndefined(version)) {
-    throw new Error(
+    await exitPogrom(
       '未获取到 package.json 数据 \n 或package.json 文件格式错误',
     );
+    throw new Error();
   }
 
   dataStore.packageJson.path = packageJsonPath;

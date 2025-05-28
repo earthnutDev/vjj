@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { getTime } from './utils';
-import { originalVersion } from '../originalVersion';
+import { originalVersion } from '../data-store/originalVersion';
 
 /**
  * 文件不存在

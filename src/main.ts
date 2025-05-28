@@ -7,7 +7,7 @@ import { diff } from './diff';
 import { updateVersion } from './updateVersion';
 import { writeToCHANGELOG } from './writeToCHANGELOG';
 import { dog, dun } from './dog';
-import { commandParameters } from './commandParameters';
+import { commandParameters } from './data-store/commandParameters';
 import { isFalse } from 'a-type-of-js';
 
 /**

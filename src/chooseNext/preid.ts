@@ -2,8 +2,8 @@ import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { manualEnter } from './manualEnter';
 import { exitPogrom } from '../utils';
-import { commandParameters } from '../commandParameters';
-import { onlineData } from '../onlineData';
+import { commandParameters } from '../data-store/commandParameters';
+import { onlineData } from '../data-store/onlineData';
 
 /**
  * 获取预发布版本号
