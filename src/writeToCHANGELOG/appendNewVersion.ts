@@ -30,7 +30,7 @@ export async function appendNewVersion(filePath: string, newVersion: string) {
   fileContent.splice(
     oldVersionLine > -1 ? oldVersionLine : 1,
     0,
-    `\n## ${newVersion} (${getTime()}) \n`,
+    `\n## ${newVersion} (${getTime()})\n`,
   );
 
   try {

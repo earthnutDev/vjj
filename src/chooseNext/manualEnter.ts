@@ -9,14 +9,23 @@ import { commandParameters } from '../data-store/commandParameters';
  *
  */
 export async function manualEnter() {
-  const preidOriginal = await command.question({
+  const result = await command.question({
     text: '请为预发布版本号配置标签',
-    private: true,
+    verify: [
+      {
+        reg: /^[a-zA-Z].*$/,
+        info: '首字符仅支持大小写英文字符',
+      },
+      {
+        reg: /^.[a-zA-Z0-9]*$/,
+        info: '非首字符仅支持使用大小写字符及数字',
+      },
+    ],
   });
 
   // 用户在输入与发布的
-  if (isUndefined(preidOriginal)) {
+  if (isUndefined(result)) {
     return exitPogrom('您在输入预发布版本的标签时选择了退出，即将为您退出');
   }
-  commandParameters.preid = preidOriginal;
+  commandParameters.preid = result;
 }

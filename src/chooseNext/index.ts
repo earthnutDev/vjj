@@ -5,7 +5,17 @@ import { getPreid } from './preid';
 import { Semver } from '../types';
 import { isUndefined } from 'a-type-of-js';
 import { exitPogrom } from '../utils';
-import { cyanPen, magentaPen } from 'color-pen';
+import {
+  brightBluePen,
+  brightGreenPen,
+  brightMagentaPen,
+  brightRedPen,
+  cyanPen,
+  greenPen,
+  hexPen,
+  magentaPen,
+  redPen,
+} from 'color-pen';
 import { originalVersion } from '../data-store/originalVersion';
 import { commandParameters } from '../data-store/commandParameters';
 
@@ -26,37 +36,43 @@ export async function chooseNext(): Promise<boolean | void> {
   // 预测版本号
   const currentPreid = preid || '??';
   const arrowhead = cyanPen`>>`;
-
   /**  数据  */
   const data: SelectionParamDataType = [
     {
-      label: `🥜 测试迭代 ${arrowhead}  ${major}.${minor}.${patch}-${preidOriginal}.${prereleaseNumber + 1}`,
+      tip: `使用 ${greenPen`prerelease`} 进行测试迭代 `,
       value: 'prerelease',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major}.${minor}.${patch}-${preidOriginal}.${prereleaseNumber + 1}`,
     },
     {
-      label: `🐛 ${hasPrerelease ? '测试转正' : '修复 bug'} ${arrowhead} ${major}.${minor}.${patch + Number(!hasPrerelease)}`,
+      tip: `使用 ${hasPrerelease ? brightBluePen`patch` : greenPen`patch`} 进行${hasPrerelease ? '测试转正' : '修复 bug'} `,
       value: 'patch',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major}.${minor}.${patch + Number(!hasPrerelease)}`,
     },
 
     {
-      label: `✨ ${hasPrerelease ? '测试转正' : '功能添加'}  ${arrowhead} ${major}.${minor + Number(!hasPrerelease || !!patch)}.0`,
+      tip: `使用 ${magentaPen`minor`} 进行${hasPrerelease ? '测试转正' : '功能添加'}`,
       value: 'minor',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major}.${minor + Number(!hasPrerelease || !!patch)}.0`,
     },
     {
-      label: `⚠️  ${hasPrerelease ? '测试转正' : '迭代更新'}  ${arrowhead} ${major + Number(!hasPrerelease || !!(patch + minor))}.0.0`,
+      tip: `使用 ${redPen`major`} 进行${hasPrerelease ? '测试转正' : '迭代更新'}  `,
       value: 'major',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major + Number(!hasPrerelease || !!(patch + minor))}.0.0`,
     },
     {
-      label: `🐛 测试预发布  ${arrowhead} ${major}.${minor}.${patch + 1}-${currentPreid}.0`,
+      tip: `使用 ${brightGreenPen`prepatch`} 发布修复测试`,
       value: 'prepatch',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major}.${minor}.${patch + 1}-${currentPreid}.0`,
     },
     {
-      label: `✨ 新功能测试  ${arrowhead} ${major}.${minor + 1}.0-${currentPreid}.0`,
+      tip: `使用 ${brightMagentaPen`preminor`} 发布新功能测试`,
       value: 'preminor',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major}.${minor + 1}.0-${currentPreid}.0`,
     },
     {
-      label: `⚠️  迭代测试  ${arrowhead} ${major + 1}.0.0-${currentPreid}.0`,
+      tip: `使用 ${brightRedPen`premajor`} 发布大版本迭代测试`,
       value: 'premajor',
+      label: `${hexPen('#666')(version)} ${arrowhead} ${major + 1}.0.0-${currentPreid}.0`,
     },
   ];
 

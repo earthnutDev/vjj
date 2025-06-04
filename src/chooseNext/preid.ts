@@ -4,6 +4,8 @@ import { manualEnter } from './manualEnter';
 import { exitPogrom } from '../utils';
 import { commandParameters } from '../data-store/commandParameters';
 import { onlineData } from '../data-store/onlineData';
+import { enArr, getRandomString } from 'a-js-tools';
+import { SelectionParamObjectData } from 'a-command';
 
 /**
  * 获取预发布版本号
@@ -16,29 +18,50 @@ export async function getPreid() {
   }
 
   /**  建议的 preid  */
-  const suggestPreid = [
-    'alpha: 版本处于内部测试',
-    'beta: 版本进入公测',
-    'rc: 版本进入候选',
-    'next: 下一个版本',
+  const data: SelectionParamObjectData[] = [
+    { label: 'alpha: 版本处于内部测试', value: 'alpha' },
+    { label: 'beta: 版本进入公测', value: 'beta' },
+    { label: 'rc: 版本进入候选', value: 'rc' },
+    { label: 'next: 下一个版本', value: 'next' },
   ];
+
+  /**  简单的建议的 preid 的数组  */
+  const suggestPreid = data.map(e => e.value);
 
   const { preid: preidOnline, info } = onlineData;
 
-  /**  云端的已有的  */
-  const onlinePreidList = preidOnline.map(
-    item => `${item}: 上一次在版本 ${info?.['dist-tags'][item]} 中使用`,
+  /**  交集 id ，这些 id 在两个数组中均包含  */
+  const intersectionPreid = enArr.intersection(preidOnline, suggestPreid);
+  const differencePreid = enArr.difference(preidOnline, suggestPreid);
+  /**  差值 id ，这些 id 仅存在于线上已发布  */
+
+  intersectionPreid.forEach(
+    e =>
+      (data[data.findIndex(i => i.value === e)].tip =
+        `上一次在版本 ${info?.['dist-tags'][e]} 中使用`),
   );
 
-  onlinePreidList.push(
-    ...suggestPreid.filter(item =>
-      preidOnline.every(preid => !item.startsWith(preid + ':')),
-    ),
-    '手动输入',
+  differencePreid.forEach(e =>
+    data.unshift({
+      label: `${e}: 上一次在版本 ${info?.['dist-tags'][e]} 中使用`,
+      value: e,
+    }),
   );
+
+  const value = getRandomString({
+    length: 6,
+    includeNumbers: true,
+    includeSpecial: true,
+  });
+
+  data.push({
+    label: '手动输入',
+    value,
+    tip: '使用全新的 dist tag',
+  });
 
   const choosePreid = await command.selection({
-    data: onlinePreidList,
+    data,
     info: '请为本次预发布配置标签',
     private: true,
   });

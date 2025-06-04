@@ -1,5 +1,12 @@
 # vjj
 
+## v1.0.3 (2025-6-5)
+
+- 优化了逻辑
+- 调整了展示的 ui 样式
+- 优化了交互体验
+- 移除了可选配置 `publish` ,使用 [gvv](https://www.npmjs.com/package/gvv) 上传到 github 触发 GitHub actions 的发布更专业。
+
 ## v1.0.2 (2025-5-28)
 
 - 优化了版本号的对比算法，更精准，更快速
