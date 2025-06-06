@@ -28,7 +28,7 @@ export const dataStore: DataStore = {
   get semver() {
     return this._semver;
   },
-  set semver(value: Semver) {
+  set semver(value: Semver | undefined) {
     this._semver = value;
     // 当值为 prerelease 时，标签为原标签
     if (value === 'prerelease') {

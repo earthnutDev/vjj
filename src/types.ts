@@ -1,3 +1,4 @@
+import { SelectionParamObjectData } from 'a-command';
 import { npmPkgInfoType, PackageJson } from 'a-node-tools';
 
 /**
@@ -12,8 +13,7 @@ export type Semver =
   | 'prepatch'
   | 'preminor'
   | 'premajor'
-  | 'prerelease'
-  | undefined;
+  | 'prerelease';
 
 /** 版本号数据  */
 export type VersionDetail = {
@@ -83,6 +83,55 @@ export type CommandParameters = {
   /**  上推 npm  */
   pushNpm: boolean | undefined;
 };
+
+export type EstimatedVersionList =
+  | 'prerelease'
+  | 'patch'
+  | 'minor'
+  | 'major'
+  | 'prepatch'
+  | 'preminor'
+  | 'premajor';
+
+/**  预测单项  */
+export type EstimatedVersionItem = {
+  /**  值  */
+  data: {
+    /**  类型  */
+    value: string;
+    /**  标签  */
+    tip: string;
+    /**  展示文本  */
+    label: string;
+  };
+  /**  是否展示  */
+  show: boolean;
+};
+
+/**  预估版本号  */
+export type EstimatedVersion = {
+  [x in EstimatedVersionList]: EstimatedVersionItem;
+} & {
+  /**  构建版本值  */
+  buildPre(kind: EstimatedVersionList): string;
+  /**  下一个版本构建预发布标签值  */
+  nextPreid(): string;
+  /**  下一个预发布版本号值  */
+  nextBuild(prerelease?: true): string | number;
+  /**  构建 label 值  */
+  createLabel(version: string): string;
+  /**  构建主预发布  */
+  buildPremajor(): void;
+  /**  构建次预发布  */
+  buildPreminor(): void;
+  /**  构建 debug 预发布版本  */
+  buildPrepatch(): void;
+  /**  一个有序的列  */
+  list: EstimatedVersionList[];
+  /**  构建与发布版本  */
+  run(): SelectionParamObjectData[];
+};
+
 /**
  *
  * 数 据
@@ -117,7 +166,7 @@ export interface DataStore {
    */
   onlineData: OnlineData;
   /**  用户选择的发布模式  */
-  _semver: Semver;
+  _semver: Semver | undefined;
   /**
    *
    * ###  用户选择的发布模式
@@ -125,7 +174,7 @@ export interface DataStore {
    * 该值在 setter ，根据发布类型自动覆盖 preid
    *
    */
-  semver: Semver;
+  semver: Semver | undefined;
   /**  最终返回的真实版本  */
   newVersion: string;
 }

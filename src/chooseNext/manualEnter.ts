@@ -2,6 +2,8 @@ import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { exitPogrom } from '../utils';
 import { commandParameters } from '../data-store/commandParameters';
+import { dataStore } from 'src/data-store';
+import { estimatedVersion } from 'src/data-store/estimatedVersion';
 
 /**
  *
@@ -28,4 +30,5 @@ export async function manualEnter() {
     return exitPogrom('您在输入预发布版本的标签时选择了退出，即将为您退出');
   }
   commandParameters.preid = result;
+  dataStore.semver = estimatedVersion.buildPre(dataStore.semver!) as never;
 }

@@ -1,3 +1,5 @@
+import { dataStore } from './../data-store/index';
+import { estimatedVersion } from './../data-store/estimatedVersion';
 import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { manualEnter } from './manualEnter';
@@ -19,6 +21,10 @@ export async function getPreid() {
 
   /**  建议的 preid  */
   const data: SelectionParamObjectData[] = [
+    {
+      label: 'canary: 不好，有瓦斯',
+      value: 'canary',
+    },
     { label: 'alpha: 版本处于内部测试', value: 'alpha' },
     { label: 'beta: 版本进入公测', value: 'beta' },
     { label: 'rc: 版本进入候选', value: 'rc' },
@@ -60,7 +66,7 @@ export async function getPreid() {
     tip: '使用全新的 dist tag',
   });
 
-  const choosePreid = await command.selection({
+  const choosePreid = await command.selection<string>({
     data,
     info: '请为本次预发布配置标签',
     private: true,
@@ -71,9 +77,11 @@ export async function getPreid() {
     return await exitPogrom();
   }
 
-  if (choosePreid === '手动输入') {
+  if (choosePreid === value) {
     return await manualEnter();
   }
 
-  commandParameters.preid = choosePreid.split(':')[0];
+  commandParameters.preid = choosePreid;
+
+  dataStore.semver = estimatedVersion.buildPre(dataStore.semver!) as never;
 }

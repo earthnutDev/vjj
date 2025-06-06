@@ -4,7 +4,6 @@ import { hexPen, magentaPen } from 'color-pen';
 import { isFalse } from 'a-type-of-js';
 import { dun } from './dog';
 import { exitPogrom } from './utils';
-import { commandParameters } from './data-store/commandParameters';
 import { originalVersion } from './data-store/originalVersion';
 
 /**
@@ -14,7 +13,6 @@ import { originalVersion } from './data-store/originalVersion';
  */
 export async function updateVersion() {
   const { semver } = dataStore;
-  const { preid } = commandParameters;
   const { version } = originalVersion;
 
   if (!semver) {
@@ -23,7 +21,7 @@ export async function updateVersion() {
     );
   }
 
-  const code = `npm version ${semver} --no-git-tag-version --allow-same-version ${semver.startsWith('pre') ? `--preid  ${preid}` : ''}`;
+  const code = `npm version ${semver} --no-git-tag-version`;
 
   if (!dun) {
     _p('跳过执行', false);
