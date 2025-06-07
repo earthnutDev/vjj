@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@qqi/dev-log": "^1.0.3",
-    "a-command": "^2.3.4",
+    "a-command": "^2.3.5",
     "a-js-tools": "^1.0.0",
     "a-node-tools": "^4.2.5",
     "a-type-of-js": "^1.0.1",

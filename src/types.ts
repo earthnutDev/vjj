@@ -98,12 +98,15 @@ export type EstimatedVersionItem = {
   /**  值  */
   data: {
     /**  类型  */
-    value: string;
+    value: Semver;
     /**  标签  */
     tip: string;
     /**  展示文本  */
     label: string;
+    /**  是否可用  */
+    disable?: boolean;
   };
+  version: string;
   /**  是否展示  */
   show: boolean;
 };
@@ -120,12 +123,20 @@ export type EstimatedVersion = {
   nextBuild(prerelease?: true): string | number;
   /**  构建 label 值  */
   createLabel(version: string): string;
+  /**  构建主版本更新预测  */
+  buildMajor(): void;
+  /**  构建次版本更新预测  */
+  buildMinor(): void;
+  /**  构建 debug 更新预测  */
+  buildPatch(): void;
   /**  构建主预发布  */
   buildPremajor(): void;
   /**  构建次预发布  */
   buildPreminor(): void;
   /**  构建 debug 预发布版本  */
   buildPrepatch(): void;
+  /** 构建与发布更新版本  */
+  buildPrerelease(): void;
   /**  一个有序的列  */
   list: EstimatedVersionList[];
   /**  构建与发布版本  */

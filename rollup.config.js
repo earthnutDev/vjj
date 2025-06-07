@@ -17,6 +17,7 @@ export default {
   },
   // 配置需要排除的包
   external: external({
+    include: ['src/data-store', 'src/data-store/estimatedVersion'],
     ignore: ['node:fs'],
   }),
   plugins: [

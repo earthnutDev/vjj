@@ -4,7 +4,6 @@ import { exitPogrom } from '../utils';
 import { commandParameters } from '../data-store/commandParameters';
 import { dataStore } from 'src/data-store';
 import { estimatedVersion } from 'src/data-store/estimatedVersion';
-
 /**
  *
  * 获取手动输入的版本号
@@ -29,6 +28,7 @@ export async function manualEnter() {
   if (isUndefined(result)) {
     return exitPogrom('您在输入预发布版本的标签时选择了退出，即将为您退出');
   }
+
   commandParameters.preid = result;
   dataStore.semver = estimatedVersion.buildPre(dataStore.semver!) as never;
 }

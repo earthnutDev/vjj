@@ -66,6 +66,13 @@ export async function getPreid() {
     tip: '使用全新的 dist tag',
   });
 
+  // data.forEach(e => {
+  //   // 当前的标签在待选（一定在）时屏蔽该指
+  //   if (e.value === preidOriginal) {
+  //     e.disable = true;
+  //   }
+  // });
+
   const choosePreid = await command.selection<string>({
     data,
     info: '请为本次预发布配置标签',
