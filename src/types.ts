@@ -140,7 +140,7 @@ export type EstimatedVersion = {
   /**  一个有序的列  */
   list: EstimatedVersionList[];
   /**  构建与发布版本  */
-  run(): SelectionParamObjectData[];
+  run(): SelectionParamObjectData<EstimatedVersionList>[];
 };
 
 /**

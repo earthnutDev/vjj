@@ -20,7 +20,7 @@ export async function getPreid() {
   }
 
   /**  建议的 preid  */
-  const data: SelectionParamObjectData[] = [
+  const data: SelectionParamObjectData<string>[] = [
     {
       label: 'canary: 不好，有瓦斯',
       value: 'canary',
