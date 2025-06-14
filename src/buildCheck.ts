@@ -1,6 +1,6 @@
 import { _p, runOtherCode } from 'a-node-tools';
 import { greenPen } from 'color-pen';
-import { exitPogrom } from './utils';
+import { exitProgram } from './utils';
 
 /**
  *
@@ -15,7 +15,7 @@ export async function buildCheck() {
   });
 
   if (!rebuild.success) {
-    return exitPogrom('打包测试出现故障，请排除该故障后重试');
+    return exitProgram('打包测试出现故障，请排除该故障后重试');
   }
   _p(greenPen(`打包测试完成`));
 }

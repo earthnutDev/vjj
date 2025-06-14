@@ -4,7 +4,7 @@ import { waiting } from './waiting';
 import { getRandomInt, sleep } from 'a-js-tools';
 
 /**  退出程序  */
-export async function exitPogrom(info: string = '您选择了退出，正在为您退出') {
+export async function exitProgram(info: string = '您选择了退出，正在为您退出') {
   waiting.run({
     info,
     prefix: getRandomInt(5),

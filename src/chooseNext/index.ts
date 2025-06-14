@@ -5,7 +5,7 @@ import { dataStore } from '../data-store';
 import { getPreid } from './preid';
 import { Semver } from '../types';
 import { isUndefined } from 'a-type-of-js';
-import { exitPogrom } from '../utils';
+import { exitProgram } from '../utils';
 import { magentaPen } from 'color-pen';
 import { originalVersion } from '../data-store/originalVersion';
 
@@ -20,7 +20,7 @@ export async function chooseNext(): Promise<boolean | void> {
   });
 
   // 用户选择了退出
-  if (isUndefined(selectVersionType)) return await exitPogrom();
+  if (isUndefined(selectVersionType)) return await exitProgram();
 
   dog('当前用户选择了 ', magentaPen`>`, selectVersionType);
 

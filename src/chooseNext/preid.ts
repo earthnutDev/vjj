@@ -3,7 +3,7 @@ import { estimatedVersion } from './../data-store/estimatedVersion';
 import { isUndefined } from 'a-type-of-js';
 import command from '../command';
 import { manualEnter } from './manualEnter';
-import { exitPogrom } from '../utils';
+import { exitProgram } from '../utils';
 import { commandParameters } from '../data-store/commandParameters';
 import { onlineData } from '../data-store/onlineData';
 import { enArr, getRandomString } from 'a-js-tools';
@@ -81,7 +81,7 @@ export async function getPreid() {
 
   // 用户使了退出
   if (isUndefined(choosePreid)) {
-    return await exitPogrom();
+    return await exitProgram();
   }
 
   if (choosePreid === value) {
