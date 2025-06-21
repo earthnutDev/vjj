@@ -1,4 +1,4 @@
-import { Dog } from '@qqi/dev-log';
+import { Dog } from '@qqi/log';
 
 export const dog = new Dog({
   name: 'vjj',
