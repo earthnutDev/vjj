@@ -237,7 +237,7 @@ export const estimatedVersion: EstimatedVersion = Object.fromEntries([
       } else if (kind === 'preminor') {
         return `${major}.${minor + 1}.0-${this.nextPreid()}.${this.nextBuild()}`;
       } else if (kind === 'premajor') {
-        return `${major + 1}.0.0-${this.nextPreid()}..${this.nextBuild()}`;
+        return `${major + 1}.0.0-${this.nextPreid()}.${this.nextBuild()}`;
       } else if (kind === 'major') {
         return `${major + Number(!hasPrerelease || !!(patch + minor))}.0.0`;
       } else if (kind === 'prerelease') {
