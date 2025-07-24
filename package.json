@@ -1,12 +1,12 @@
 {
   "name": "vjj",
   "type": "module",
-  "version": "1.0.9",
+  "version": "1.0.10-alpha.0",
   "private": true,
   "description": "一个简单的 npm 包版本更新 🔧 就是 `npm version` 的再 📦 ",
   "scripts": {
-    "beautify": "npm run eslint && npm run prettier",
-    "build": "jja rm dist && rollup --config rollup.config.js && npm run clean:package",
+    "beautify": "pnpm run eslint && pnpm run prettier",
+    "build": "jja rm dist && rollup --config rollup.config.js && pnpm run clean:package",
     "clean:package": "node scripts/clean-package-json.js",
     "diff": "jja pkg --diff",
     "eslint": "jja cls && eslint src",
@@ -15,7 +15,7 @@
     "push:version": "gvv",
     "push": "gvv",
     "test": "jja cls && jest --coverage",
-    "vjj": "npm run build && node dist/bin.mjs",
+    "vjj": "pnpm run build && node dist/bin.mjs",
     "prepublishOnly": "pjj",
     "prepare": "husky"
   },
