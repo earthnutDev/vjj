@@ -29,7 +29,7 @@ export async function checkVersion(version: string, tempInfo: npmPkgInfoType) {
   } = originalVersion;
   /**  由解析来的数据拼接成版本  */
   const splicingVersion = `${major}.${minor}.${patch}${hasPrerelease ? `-${preidOriginal}.${prereleaseNumber}` : ''}`;
-  /**  拼接版本理应与原版本相同  */
+  //  拼接版本理应与原版本相同，不相同时则显示一个重写版本的提示
   if (originalVersion.version !== splicingVersion) {
     return await rewriteVersion(splicingVersion);
   }

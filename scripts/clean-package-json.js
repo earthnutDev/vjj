@@ -20,7 +20,7 @@ packageJson = {
   },
   files: ['src', 'bin.mjs'],
   keywords: ['vjj'],
-  homepage: 'https://earthnut.dev/vjj',
+  homepage: 'https://earthnut.dev/npm/vjj',
   bugs: {
     url: 'https://github.com/earthnutDev/vjj/issues',
     email: 'earthnut.dev@outlook.com',

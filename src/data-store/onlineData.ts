@@ -42,7 +42,13 @@ export const onlineData: OnlineData = {
 
 const list: { [x: string]: VersionDetail } = {};
 
-/**  对比  */
+/**
+ * 对比
+ *
+ * @param a  对比的其中一个版本号
+ * @param b  对比的另一个版本号
+ * @param info 该包的线上数据
+ */
 function compared(a: string, b: string, info: npmPkgInfoType): string {
   if (isBusinessEmptyString(a)) {
     dog('第一参数为空，返回', b);
@@ -86,10 +92,10 @@ function compared(a: string, b: string, info: npmPkgInfoType): string {
 
   if (c.hasPrerelease && !d.hasPrerelease) {
     dog('第一个版本没有预发布标识', a, b);
-    return a;
+    return b;
   } else if (!c.hasPrerelease && d.hasPrerelease) {
     dog('第二个版本没有预发布标识', a, b);
-    return b;
+    return a;
   }
   // 原以为判断天衣无缝，当本地版本为 0x.xx.xx 这种非法的字符时将出现在这里
   else if (!c.hasPrerelease && !d.hasPrerelease) {

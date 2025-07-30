@@ -1,6 +1,6 @@
 # Version Judgment Juggler (vjj ，版本智能预测)
 
-[![version](<https://img.shields.io/npm/v/vjj.svg?logo=npm&logoColor=rgb(0,0,0)&label=版本号&labelColor=rgb(73,73,228)&color=rgb(0,0,0)>)](https://www.npmjs.com/package/vjj) [![Coverage Status](<https://img.shields.io/coverallsCoverage/github/earthnutDev/vjj?logo=coveralls&label=coveralls&labelColor=rgb(12, 244, 39)&color=rgb(0,0,0)>)](https://coveralls.io/github/earthnutDev/vjj?branch=main) [![codecov](<https://img.shields.io/codecov/c/github/earthnutDev/vjj/main?logo=codecov&label=codecov&labelColor=rgb(7, 245, 245)&color=rgb(0,0,0)>)](https://codecov.io/gh/earthnutDev/vjj) [![issues 提交](<https://img.shields.io/badge/issues-提交-rgb(255,0,63)?logo=github>)](https://github.com/earthnutDev/vjj/issues)
+[![version](<https://img.shields.io/npm/v/vjj.svg?logo=npm&logoColor=rgb(0,0,0)&label=版本号&labelColor=rgb(73,73,228)&color=rgb(0,0,0)>)](https://www.npmjs.com/package/vjj) [![issues 提交](<https://img.shields.io/badge/issues-提交-rgb(255,0,63)?logo=github>)](https://github.com/earthnutDev/vjj/issues)
 
 ## 📦 安装
 
@@ -76,4 +76,4 @@ npx vjj -nc false
 
 ## 📄 文档地址
 
-参看 [https://earthnut.dev/vjj/](https://earthnut.dev/vjj/)
+参看 [vjj](https://earthnut.dev/npm/vjj/)
