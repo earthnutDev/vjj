@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { dog } from './src/dog';
-import command from './src/command';
+import { dog } from './src/aided/dog';
+import command from './src/aided/command';
 import { main } from './src/main';
 import { magentaPen } from 'color-pen';
 

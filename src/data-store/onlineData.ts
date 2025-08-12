@@ -1,4 +1,4 @@
-import { dog } from './../dog';
+import { dog } from '../aided/dog';
 import { npmPkgInfoType } from 'a-node-tools';
 import { OnlineData, VersionDetail } from '../types';
 import { isBusinessEmptyString, isNull, isUndefined } from 'a-type-of-js';

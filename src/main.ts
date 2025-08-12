@@ -1,12 +1,12 @@
 import { publish } from './publish';
-import { parseArg } from './parseArg';
+import { parseArg } from './aided/parseArg';
 import { chooseNext } from './chooseNext';
 import { buildCheck } from './buildCheck';
 import { getVersion } from './getVersion';
 import { diff } from './diff';
 import { updateVersion } from './updateVersion';
 import { writeToCHANGELOG } from './writeToCHANGELOG';
-import { dog, dun } from './dog';
+import { dog, dun } from './aided/dog';
 import { commandParameters } from './data-store/commandParameters';
 import { isFalse } from 'a-type-of-js';
 

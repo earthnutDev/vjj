@@ -1,7 +1,7 @@
 import { dataStore } from './../data-store/index';
 import { estimatedVersion } from './../data-store/estimatedVersion';
 import { isUndefined } from 'a-type-of-js';
-import command from '../command';
+import command from '../aided/command';
 import { manualEnter } from './manualEnter';
 import { exitProgram } from '../utils';
 import { commandParameters } from '../data-store/commandParameters';

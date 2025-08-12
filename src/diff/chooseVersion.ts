@@ -1,7 +1,7 @@
-import { dog } from './../dog';
+import { dog } from '../aided/dog';
 import { onlineData } from './../data-store/onlineData';
 import { originalVersion } from '../data-store/originalVersion';
-import command from '../command';
+import command from '../aided/command';
 import { isUndefined } from 'a-type-of-js';
 import { writeToFile } from './writeToFile';
 import { magentaPen } from 'color-pen';

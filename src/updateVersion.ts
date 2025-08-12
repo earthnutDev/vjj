@@ -2,7 +2,7 @@ import { runOtherCode, _p } from 'a-node-tools';
 import { dataStore } from './data-store';
 import { hexPen, magentaPen } from 'color-pen';
 import { isFalse } from 'a-type-of-js';
-import { dun } from './dog';
+import { dog, dun } from './aided/dog';
 import { exitProgram } from './utils';
 import { originalVersion } from './data-store/originalVersion';
 
@@ -33,6 +33,7 @@ export async function updateVersion() {
     return exitProgram(magentaPen`执行 npx version 出现故障`);
   } else {
     _p(hexPen('#3a6')`版本整理完毕, 版本号由 ${version} 更新为 ${result.data}`);
-    dataStore.newVersion = result.data.replace(/\n/g, '');
+    dog('获取的新版本号为', code, result, [...result.data]);
+    dataStore.newVersion = result.data.trim();
   }
 }

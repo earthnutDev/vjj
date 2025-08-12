@@ -1,6 +1,6 @@
 import { _p, cursorAfterClear } from 'a-node-tools';
-import command from './command';
-import { waiting } from './waiting';
+import command from './aided/command';
+import { waiting } from './aided/waiting';
 import { getRandomInt, sleep } from 'a-js-tools';
 import { cyanPen, greenPen } from 'color-pen';
 import { dataStore } from './data-store';

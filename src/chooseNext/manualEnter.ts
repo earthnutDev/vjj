@@ -1,5 +1,5 @@
 import { isUndefined } from 'a-type-of-js';
-import command from '../command';
+import command from '../aided/command';
 import { exitProgram } from '../utils';
 import { commandParameters } from '../data-store/commandParameters';
 import { dataStore } from 'src/data-store';

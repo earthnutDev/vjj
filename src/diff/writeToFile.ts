@@ -1,7 +1,7 @@
 import { onlineData } from './../data-store/onlineData';
 import { dataStore } from './../data-store/index';
 import { isNull } from 'a-type-of-js';
-import { dog, dun } from '../dog';
+import { dog, dun } from '../aided/dog';
 import { writeFileSync } from 'node:fs';
 import { originalVersion } from '../data-store/originalVersion';
 import { exitProgram } from '../utils';

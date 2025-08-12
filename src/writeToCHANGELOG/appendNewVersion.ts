@@ -1,4 +1,4 @@
-import { dog } from './../dog';
+import { dog } from '../aided/dog';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { getTime } from './utils';
 import { typewrite } from 'a-node-tools';
@@ -14,7 +14,7 @@ export async function appendNewVersion(filePath: string, newVersion: string) {
 
   // 在上一个步骤已经判断了该文件存在
   const fileContent = readFileSync(filePath, 'utf-8')
-    .replace(/\n{3,}/g, '\n\n')
+    .replace(/(\r?\n){3,}/g, '\n\n')
     .split('\n');
 
   /**  旧版本在文件 🀄️ 的行数   */
@@ -26,7 +26,7 @@ export async function appendNewVersion(filePath: string, newVersion: string) {
       break;
     }
   }
-
+  dog('当前的版本', [...newVersion]);
   fileContent.splice(
     oldVersionLine > -1 ? oldVersionLine : 1,
     0,

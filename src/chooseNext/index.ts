@@ -1,5 +1,5 @@
 import { estimatedVersion } from './../data-store/estimatedVersion';
-import { dog } from './../dog';
+import { dog } from '../aided/dog';
 import { selection } from 'a-command';
 import { dataStore } from '../data-store';
 import { getPreid } from './preid';

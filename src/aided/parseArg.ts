@@ -1,6 +1,6 @@
 import { isArray, isString, isUndefined } from 'a-type-of-js';
 import command from './command';
-import { dataStore } from './data-store';
+import { dataStore } from '../data-store';
 
 /**
  *

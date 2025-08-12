@@ -1,4 +1,4 @@
-import { dog } from './../dog';
+import { dog } from '../aided/dog';
 import { getNpmPkgInfo } from 'a-node-tools';
 import { isNull } from 'a-type-of-js';
 import { checkVersion } from './checkVersion';

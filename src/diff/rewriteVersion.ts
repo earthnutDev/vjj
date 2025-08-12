@@ -1,5 +1,5 @@
 import { originalVersion } from './../data-store/originalVersion';
-import command from '../command';
+import command from '../aided/command';
 import { cyanPen, greenPen, magentaPen } from 'color-pen';
 import { _p } from 'a-node-tools';
 import { isUndefined } from 'a-type-of-js';

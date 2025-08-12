@@ -1,6 +1,6 @@
 import { _p, runOtherCode } from 'a-node-tools';
 import { greenPen } from 'color-pen';
-import { dun } from './dog';
+import { dun } from './aided/dog';
 
 /**
  *
